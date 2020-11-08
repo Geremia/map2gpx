@@ -29,8 +29,8 @@ for i in data:
         latsign = '-'
     if i[6] == 'W':
         lonsign = '-'
-    lat = str(round(float(latsign + i[3])/100.,6))
-    lon = str(round(float(lonsign + i[5])/100.,6))
+    lat = latsign + str(round(float(i[3][0:2]) + float(i[3][2:])/60.0, 6))
+    lon = lonsign + str(round(float(i[5][0:3]) + float(i[5][3:])/60.0, 6))
     year = '20' + date_str[4:6]
     month = date_str[2:4]
     day = date_str[0:2]
@@ -38,9 +38,10 @@ for i in data:
     minute = time[2:4]
     second = time[4:6]
 
-    print("			<trkpt lat=\"" + lat + "\" lon=\"" + lon + "\">")
-    print("				<time>" + year + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':' + second + 'Z</time>')
-    print("			</trkpt>")
+    if i[0] == 'A':
+        print("			<trkpt lat=\"" + lat + "\" lon=\"" + lon + "\">")
+        print("				<time>" + year + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':' + second + 'Z</time>')
+        print("			</trkpt>")
 
 print("""		</trkseg>
 	</trk>
